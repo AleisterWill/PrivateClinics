@@ -1,0 +1,36 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<h1>SCHEDULE LIST</h1>
+
+<form>
+    <div class="form-floating">
+        <input id="sch" name="q" type="date" class="form-control" placeholder="Nhập lịch"/>
+        <label for="sch">Nhập lịch</label>
+    </div>
+    <input type="submit"/>
+</form>
+
+<table class="table table-striped text-center border">
+    <tr><td colspan="5">DANH SÁCH KHÁM BỆNH</td></tr>
+    <tr><td colspan="5">Ngày khám: {{q}}</td></tr>
+    <tr>
+        <td>STT</td>
+        <td>Họ tên</td>
+        <td>Giới tính</td>
+        <td>Năm sinh</td>
+        <td>Địa chỉ</td>
+    </tr>
+    {% for r in range(schedule_list|length) %}
+    <tr>
+        <td>{{r+1}}</td>
+        {% for v in range(1,schedule_list[r]|length) %}
+        <td>{{schedule_list[r][v]}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

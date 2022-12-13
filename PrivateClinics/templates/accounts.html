@@ -1,0 +1,134 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center bg-light" style="height: 150vh;">
+    <div class="col-md-6 my-auto shadow bg-white py-5" style="border-radius: 50px;">
+
+        {% if err_msg %}
+        <div class="alert alert-danger">
+            {{err_msg}}
+        </div>
+        {% endif %}
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs mb-3 justify-content-center" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="btn btn-outline-dark active" id="signin-tab" data-bs-toggle="tab" data-bs-target="#signin"
+                   type="button"
+                   role="tab" aria-controls="signin" aria-selected="true">Đăng nhập
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="btn btn-outline-dark" id="profile-tab" data-bs-toggle="tab" data-bs-target="#signup"
+                   type="button"
+                   role="tab" aria-controls="signup" aria-selected="false">Đăng ký
+                </a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+
+            <!--            Sign in-->
+            <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                <div class="card mx-auto" style="width: 60%;">
+                    <form method="post" action="signin">
+                        <div class="card-body">
+                            <div class="input-group mb-2">
+                                <div class="input-group-text"><i class="fa fa-envelope"></i></div>
+                                <div class="form-floating">
+                                    <input id="phoneNum" class="form-control" name="phoneNum"
+                                           placeholder="Số điện thoại"/>
+                                    <label for="phoneNum">Số điện thoại</label>
+                                </div>
+                            </div>
+                            <div class="input-group mb-2">
+                                <div class="input-group-text"><i class="fa fa-key"></i></div>
+                                <div class="form-floating">
+                                    <input class="form-control" id="password" name="password" type="password"
+                                           placeholder="Password"/>
+                                    <label for="password">Mật khẩu</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <input type="submit" class="btn btn-outline-dark p-2" value="Đăng nhập"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!--            Sign up-->
+            <div class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                <div class="card mx-auto" style="width: 100%;">
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-floating">
+                                        <input id="lastName" class="form-control" name="lastName"
+                                               placeholder="Họ và tên lót"/>
+                                        <label for="lastName">Họ và tên lót</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating">
+                                        <input id="firstName" class="form-control" name="firstName" placeholder="Tên"/>
+                                        <label for="firstName">Tên</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-floating">
+                                        <select id="sex" class="form-select" name="sex">
+                                            <option value="M">Nam</option>
+                                            <option value="F">Nữ</option>
+                                        </select>
+                                        <label for="sex">Giới tính</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating">
+                                        <input id="dob" class="form-control" name="dob" type="date"
+                                               placeholder="Ngày tháng năm sinh"/>
+                                        <label for="dob">Ngày tháng năm sinh</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input id="address" class="form-control" name="address" placeholder="Địa chỉ"/>
+                                <label for="address">Địa chỉ</label>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input id="phoneReg" class="form-control" name="phoneReg" placeholder="Số điện thoại"/>
+                                <label for="phoneReg">Số điện thoại</label>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <input id="passReg" class="form-control" type="password" name="passReg"
+                                       placeholder="Mật khẩu"/>
+                                <label for="passReg">Mật khẩu</label>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input id="confirmPW" class="form-control" type="password" name="confirmPW"
+                                       placeholder="Xác nhận mật khẩu"/>
+                                <label for="confirmPW">Xác nhận mật khẩu</label>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input id="avatar" class="form-control" name="avatar" type="file"
+                                       placeholder="Ảnh đại diện"/>
+                                <label for="avatar">Ảnh đại diện</label>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <input type="submit" class="btn btn-outline-dark p-2" value="Đăng ký"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}

@@ -1,0 +1,118 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+{% if errmsg %}
+<div class="alert alert-danger text-center">{{errmsg}}</div>
+{% endif %}
+
+{% if successmsg %}
+<div class="alert alert-success text-center">{{successmsg}}</div>
+{% endif %}
+
+<h1>Lap phieu kham</h1>
+
+<h1>Tra cuu lich su benh theo ho ten hoac sdt</h1>
+<form>
+    <div class="form-floating">
+        <input id="q" name="q" list="usersList" class="form-control col-11" placeholder="Họ tên, Số điện thoại"/>
+        <label for="q">Họ tên, Số điện thoại</label>
+    </div>
+    <input class="btn btn-primary" type="submit" value="Tra cứu"/>
+</form>
+
+{{diag}}
+{% if diag %}
+<table>
+    {% for r in diag %}
+    <tr>
+        <td>{{r.date}}</td>
+        <td>{{r.diagnosis}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endif %}
+
+{{session['cart']}}
+
+<form method="post">
+    <table class="table text-center table-striped table-bordered">
+        <tr>
+            <td colspan="6">PHIẾU KHÁM BỆNH</td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                Họ tên:
+                <select class="form-control" name="user_id">
+                    {% if diag %}
+                    <option value="{{diag[0][1].id}}">{{diag[0][1].first_name}} {{diag[0][1].last_name}}</option>
+                    {% endif %}
+                </select>
+            </td>
+            <td colspan="3">
+                Ngày khám:
+                <select class="form-control" name="sch_id">
+                    {% if diag %}
+                    {% for r in diag %}
+                    <option value="{{r[0].id}}">{{r[0].date}} - {{r[0].diagnosis}}</option>
+                    {% endfor %}
+                    {% else %}
+                    <option value="">Chưa đăng ký lịch khám</option>
+                    {% endif %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                Triệu chứng: <input name="symptoms" class="form-control"/>
+            </td>
+            <td colspan="3">
+                Chẩn đoán bệnh: <input name="diagnosis" class="form-control"/>
+            </td>
+        </tr>
+        <tr>
+            <td>ID</td>
+            <td>Thuốc</td>
+            <td>Đơn vị</td>
+            <td>Số lượng</td>
+            <td>Cách dùng</td>
+            <td></td>
+        </tr>
+        {% if session['cart'] %}
+        {% for r in session['cart'].values() %}
+        <tr id="{{r['id']}}">
+            <td>{{r['id']}}</td>
+            <td>{{r['name']}}</td>
+            <td>{{r['unit']}}</td>
+            <td>
+                <input onblur="updateQuantity({{r['id']}}, this)" name="quantity" type="number" min="0" class="form-control" value="{{r['quantity']}}"/>
+            </td>
+            <td>
+                <input onblur="updateUsage({{r['id']}}, this)" name="usage" class="form-control" value="{{r['usage']}}"/>
+            </td>
+            <td>
+                <a onclick="deleteCartItem({{r['id']}})" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr><td colspan="6">Chưa có thuốc. <a href="/medlookup">Tra cứu thuốc</a> rồi thêm vào phiếu khám</td></tr>
+        {% endif %}
+        <tr>
+            <td colspan="6">
+                <input type="submit" class="btn btn-primary" value="Lập phiếu"/>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+<datalist id="usersList">
+    {% for r in users %}
+    <option data-value="{{r.id}}">{{r}}</option>
+    {% endfor %}
+</datalist>
+
+{% endblock %}

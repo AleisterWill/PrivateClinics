@@ -1,0 +1,16 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+<div class="p-5" style="background-image: url('https://res.cloudinary.com/aleisterw/image/upload/v1670220073/home-jmbtr_akatvt.png'); background-size: cover">
+    <div class="p-5 col-md-6 bg-light rounded-3" style="opacity: 0.8;">
+        <h2>Chào mừng bạn đến phòng mạch tư của chúng tôi!</h2>
+        <p>Với đội ngũ bác sĩ tuyệt vời nhất, chúng tôi cam kết luôn đặt sức khỏe của bạn lên hàng đầu</p>
+        {% if current_user.is_authenticated %}
+            <a href="/schedulev2" class="text-center mx-auto btn btn-primary">Đăng ký lịch khám</a>
+        {% else %}
+            <a href="/schedulev1" class="text-center mx-auto btn btn-primary">Đăng ký lịch khám</a>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock content %}

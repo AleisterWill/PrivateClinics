@@ -1,0 +1,114 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+
+<div class="alert alert-success text-center h3">Thống kê - Báo cáo</div>
+
+<form class="form form-inline">
+
+    <div class="form-group ml-3">
+        <label for="mY">Tháng, năm</label>
+        <input type="month" id="mY" name="mY" class="form-control" placeholder="Tháng, năm"/>
+    </div>
+
+    <div class="form-group ml-3">
+        <input type="submit" class="btn btn-primary" value="Lọc dữ liệu"/>
+    </div>
+</form>
+
+{% if revenueStats %}
+
+<div class="my-3">
+    <table class="table table-bordered text-center">
+        <tr>
+            <td colspan="5">BÁO CÁO DOANH THU THEO THÁNG</td>
+        </tr>
+        <tr>
+            <td colspan="5">{{mY}}</td>
+        </tr>
+        <tr>
+            <td>STT</td>
+            <td>Ngày</td>
+            <td>Số bệnh nhân</td>
+            <td>Doanh thu</td>
+            <td>Tỉ lệ</td>
+        </tr>
+        {% for r in range(revenueStats|length) %}
+        <tr>
+            <td>{{r+1}}</td>
+            {% for v in revenueStats[r] %}
+            <td>{{v}}</td>
+            {% endfor %}
+            <td>{{revenueStats[r][2]/total}}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="5">Tổng doanh thu: {{total}}</td>
+        </tr>
+    </table>
+
+    <canvas id="rev_stats"></canvas>
+</div>
+
+{% endif %}
+
+{% if medicineStats %}
+
+<div class="my-3">
+    <table class="table table-bordered text-center">
+        <tr>
+            <td colspan="5">BÁO CÁO SỬ DỤNG THUỐC</td>
+        </tr>
+        <tr>
+            <td colspan="5">{{mY}}</td>
+        </tr>
+        <tr>
+            <td>STT</td>
+            <td>Thuốc</td>
+            <td>Đơn vị tính</td>
+            <td>Số lượng</td>
+            <td>Số lần dùng (số lần có trong hóa đơn)</td>
+        </tr>
+        {% for r in range(medicineStats|length) %}
+        <tr>
+            <td>{{r+1}}</td>
+            {% for v in medicineStats[r] %}
+            <td>{{v}}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+
+    <canvas id="med_use_stats"></canvas>
+</div>
+
+{% endif %}
+
+
+{{medicineStats}}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/my-chart.js') }}"></script>
+<script>
+    let dataRev = [], labelsRev = []
+    {% for r in revenueStats %}
+        labelsRev.push('{{r[0]}}')
+        dataRev.push('{{r[2]}}')
+    {% endfor %}
+
+    let dataMedUse = [], labelsMedUse = []
+    {% for r in medicineStats %}
+        labelsMedUse.push('{{r[0]}}')
+        dataMedUse.push('{{r[2]}}')
+    {% endfor %}
+
+    window.onload = function() {
+        revChart(labelsRev, dataRev),
+        medUseChart(labelsMedUse, dataMedUse)
+    }
+
+
+</script>
+
+{% endblock %}
+

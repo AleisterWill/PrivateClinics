@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Private Clinic</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a href="/schedule" class="nav-link">Danh sách khám bệnh</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/medlookup" class="nav-link">Tra cứu thuốc</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/lapphieukham" class="nav-link">Lập phiếu khám <span class="badge bg-secondary cart-counter">{{cart.total_quantity}}</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="/receiptlookup" class="nav-link">Tra cứu hóa đơn</a>
+                </li>
+            </ul>
+
+            {% if current_user.is_authenticated %}
+            <div class="nav-item dropdown ms-5 me-3">
+                <button class="btn btn-secondary dropdown-toggle" href="#" id="navUserDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if current_user.avatar.startswith('https') %}
+                    <img class="rounded-circle" src="{{current_user.avatar}}" width="30" height="30" alt="alt"/>
+                    {% else %}
+                    <img class="rounded-circle"
+                         src="https://res.cloudinary.com/aleisterw/image/upload/v1656569686/default-user_vr4tyj.png"
+                         width="30" height="30" alt="alt"/>
+                    {% endif %}
+                    {{current_user.first_name}} {{current_user.last_name}}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/signout"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a></li>
+                </ul>
+            </div>
+
+            {% else %}
+            <a href="/accounts" class="btn btn-secondary d-flex ms-5">Đăng nhập</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

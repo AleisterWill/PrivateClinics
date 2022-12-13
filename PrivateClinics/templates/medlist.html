@@ -1,0 +1,67 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<form class="form">
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-floating">
+                <select class="form-control" id="mtype" name="mtype">
+                    <option value="">Tất cả</option>
+                    {% for t in med_types %}
+                    <option value="{{t.id}}">{{t.name}}</option>
+                    {% endfor %}
+                </select>
+                <label for="mtype">Loại thuốc</label>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-floating">
+                <input placeholder="Tên, thành phần" class="form-control" id="q" name="q"/>
+                <label for="q">Tên, thành phần</label>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <input type="submit" class="btn btn-primary" value="Tra cứu"/>
+    </div>
+
+
+</form>
+
+<nav aria-label="Page navigation example ">
+    <ul class="pagination justify-content-end">
+        {% for page_num in med_list.iter_pages() %}
+        {% if page == page_num %}
+        <li class="page-item active"><a class="page-link" href="?page={{page_num}}&q={{q}}&mtype={{mtype}}">{{page_num}}</a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{page_num}}&q={{q}}&mtype={{mtype}}">{{page_num}}</a></li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</nav>
+
+<div class="row">
+    {% for r in med_list %}
+    <div class="col-md-3 mb-3">
+        <div class="card h-100">
+            {% if r.images %}
+            <img src="{{r[0].images}}" height="250" class="card-img-top">
+            {% else %}
+            <img src="https://res.cloudinary.com/aleisterw/image/upload/v1670490066/200ml-Amber-Glass-Sirop-Bottle-w-CRC_poqjus.webp"
+                 height="250" class="card-img-top">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{r[0].name}}</h5>
+                <p>Thành phần: {{r[0].ingredients}}</p>
+                <p>Đơn vị tính: {{r[1].name}}</p>
+                <a href="javascript:;" onclick="addToCart({{r[0].id}}, '{{r[0].name}}', '{{r[1].name}}')"
+                   class="btn btn-primary">Thêm vào phiếu</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+
+
+<h1 class="text-center text-success">Quản trị Phòng mạch tư</h1>
+
+{% if successmsg %}
+<div class="alert alert-success h3">{{successmsg}}</div>
+{% endif %}
+
+
+<form class="form" method="post">
+    <div class="form-group">
+        <label for="mP">Số bệnh nhân khám tối đa mỗi ngày</label>
+        <input min="0" type="number" class="form-control" name="MAX_PATIENTS_PER_DAY", id="mP" placeholder="Số bệnh nhân khám tối đa mỗi ngày" value="{{mP}}"/>
+    </div>
+    <div class="form-group">
+        <label for="mP">Số tiền khám quy định</label>
+        <input min="0" type="number" class="form-control" name="EXAMINATION_FEE", id="eF" placeholder="Số tiền khám quy định" value="{{eF}}"/>
+    </div>
+    <div class="text-center">
+        <input type="submit" class="btn btn-success" value="Lưu thay đổi"/>
+    </div>
+</form>
+
+
+
+
+{% endblock %}

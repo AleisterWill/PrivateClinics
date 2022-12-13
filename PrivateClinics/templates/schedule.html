@@ -1,0 +1,68 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+{% if errmsg %}
+<div class="h2 alert alert-danger">{{errmsg}}</div>
+{% endif %}
+
+{% if successmsg %}
+<div class="h2 alert alert-success">{{successmsg}}</div>
+{% endif %}
+<form class="form" method="post">
+    {% if not current_user.is_authenticated %}
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-floating">
+                <input id="lastName" class="form-control" name="lastName"
+                       placeholder="Họ và tên lót"/>
+                <label for="lastName">Họ và tên lót</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating">
+                <input id="firstName" class="form-control" name="firstName" placeholder="Tên"/>
+                <label for="firstName">Tên</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-floating">
+                <select id="sex" class="form-select" name="sex">
+                    <option value="M">Nam</option>
+                    <option value="F">Nữ</option>
+                </select>
+                <label for="sex">Giới tính</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating">
+                <input id="dob" class="form-control" name="dob" type="date"
+                       placeholder="Ngày tháng năm sinh"/>
+                <label for="dob">Ngày tháng năm sinh</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-floating mb-4">
+        <input id="address" class="form-control" name="address" placeholder="Địa chỉ"/>
+        <label for="address">Địa chỉ</label>
+    </div>
+    <div class="form-floating mb-4">
+        <input id="phone" class="form-control" name="phone" placeholder="Số điện thoại"/>
+        <label for="phone">Số điện thoại</label>
+    </div>
+
+    {% endif %}
+
+    <div class="form-floating mb-4">
+        <input id="date" class="form-control" name="date" type="date"
+               placeholder="Ngày hẹn khám"/>
+        <label for="date">Ngày hẹn khám</label>
+    </div>
+    <input class="btn btn-primary text-center" type="submit" value="Đăng ký lịch"/>
+</form>
+
+
+{% endblock %}
