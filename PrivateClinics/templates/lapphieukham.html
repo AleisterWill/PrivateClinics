@@ -37,6 +37,7 @@
 
 {{session['cart']}}
 
+{% if diag %}
 <form method="post">
     <table class="table text-center table-striped table-bordered">
         <tr>
@@ -107,6 +108,7 @@
         </tr>
     </table>
 </form>
+{% endif %}
 
 
 <datalist id="usersList">
